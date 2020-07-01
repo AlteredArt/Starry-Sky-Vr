@@ -1,26 +1,31 @@
 import React, { Component } from 'react';
-import { AppRegistry, asset, Pano, Text, View } from 'react-vr';
+import { AppRegistry, asset, Pano, Text, View} from 'react-vr';
+
 
 export default class Sky extends Component {
-  constructor() {
+  constructor(){
     super();
-
-    this.state = {
-      showSign: true
-    };
-    setInterval(() => this.setState({showSign: !this.state.showSign}), 1000);
+    this.state={
+      fontSize: 0.1
+    }
   }
 
   render() {
-  let message = this.state.showSign === true ? 'Welcome to VR Land' : ' ';
-
     return (
       <View>
            <Pano source={asset('starry-sky.jpg')}></Pano>
-           <Text style={{fontSize: 0.1, transform: [{translate: [-1, 0, -2]}]}}>{message}</Text>
+           <Text
+           onEnter={() => this.setState({fontSize: 0.2})}
+           onExit={() => this.setState({fontSize: 0.1})}
+           style={{
+             fontSize: this.state.fontSize,
+             transform: [{translate: [0, 0, -2]}]
+           }}>
+           Hover over me! </Text>
          </View>
-    );
+    )
   }
 };
+
 
 AppRegistry.registerComponent('Sky', () => Sky);
